@@ -7,6 +7,7 @@ import { ApiService } from '../../services/api.service';
   styleUrls: ['./autocomplete-input.component.scss']
 })
 export class AutocompleteInputComponent implements OnInit {
+  public options: any = [];
 
   constructor(
     private _apiService: ApiService
@@ -18,8 +19,8 @@ export class AutocompleteInputComponent implements OnInit {
 
   async searchData(searchValue: string) {
     this._apiService.getData('issues', searchValue)
-      .then((data) => {
-        console.log(data)
+      .then((data: any) => {
+        this.options = data?.items || [];
       })
       .catch((e) => {
         console.error(e)
