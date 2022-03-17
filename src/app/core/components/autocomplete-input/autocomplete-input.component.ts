@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { fromEvent } from 'rxjs';
+import { debounceTime, map } from 'rxjs/operators';
 import { ApiService } from '../../services/api.service';
 
 @Component({
@@ -7,6 +9,8 @@ import { ApiService } from '../../services/api.service';
   styleUrls: ['./autocomplete-input.component.scss']
 })
 export class AutocompleteInputComponent implements OnInit {
+  @ViewChild('searchInput', { static: true }) searchInput: ElementRef | undefined;
+
   public options: any = [];
 
   constructor(
@@ -14,7 +18,16 @@ export class AutocompleteInputComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.searchData('bug');
+    this.setListener();
+  }
+
+  setListener() {
+    fromEvent(this.searchInput?.nativeElement, 'keyup')
+    .pipe(
+      debounceTime(500),
+      map((event: any) => event.target.value)
+    )
+    .subscribe(value => this.searchData(value));
   }
 
   async searchData(searchValue: string) {

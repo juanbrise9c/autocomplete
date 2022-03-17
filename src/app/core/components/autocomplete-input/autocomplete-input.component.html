@@ -1,29 +1,23 @@
 <div class="input-container">
-    <input type="text" class="custom-input" placeholder="Search">
+    <input type="text" class="custom-input" placeholder="Search" #searchInput>
+    <span class="loading-icon"></span>
     <div class="custom-input-autocomplete" *ngIf="options.length">
-        <div *ngFor="let option of options">
-            <div class="row">
-                <div class="col-4">
-                    <img [src]="option.user.avatar_url" alt="" width="100px">
-                </div>
-                <div class="col-8">
-                    <label>
-                        <span>IMG:</span>
-                        <br> 
-            
-                        <span>Date:</span>
-                        {{ option.created_at | date: 'mediumTime' }} <br> 
-            
-                        <span>N°:</span>
-                        {{ option.number }} <br>
-            
-                        <span>Bug:</span>
-                        {{ option.title }} <br>
-            
-                        <span>CreatedBy:</span>
-                        {{ option.user?.login || '-' }}
-                    </label>
-                </div>
+        <div *ngFor="let option of options" class="row custom-row">
+            <div class="col-5 col-md-3 d-flex justify-content-center align-items-center">
+                <img [src]="option.user.avatar_url" alt="" class="profileImg">
+            </div>
+            <div class="col-7 col-md-9">
+                <span>N°:</span>
+                {{ option.number }} <br>
+
+                <span>Date:</span>
+                {{ option.created_at | date: 'mediumTime' }} <br> 
+
+                <span>Author:</span>
+                {{ option.user?.login || '-' }} <br>
+    
+                <span>Bug:</span>
+                {{ option.title }}
             </div>
         </div>
     </div>
