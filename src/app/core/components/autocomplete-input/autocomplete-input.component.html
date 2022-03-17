@@ -7,17 +7,21 @@
                 <img [src]="option.user.avatar_url" alt="" class="profileImg">
             </div>
             <div class="col-7 col-md-9">
-                <span>N°:</span>
-                {{ option.number }} <br>
-
-                <span>Date:</span>
-                {{ option.created_at | date: 'mediumTime' }} <br> 
-
-                <span>Author:</span>
-                {{ option.user?.login || '-' }} <br>
-    
-                <span>Bug:</span>
-                {{ option.title }}
+                <div class="paragraph">
+                    <span class="fw-bold">N°: </span>
+                    <span class="">{{ option.number }}</span>
+                </div>
+                <div class="paragraph">
+                    <span class="fw-bold">Date: </span>
+                    <span class="">{{ option.created_at | date: 'mediumTime' }}</span>
+                </div>
+                <div class="paragraph">
+                    <span class="fw-bold">Author: </span>
+                    <span class="">{{ option.user?.login || '-' }}</span>
+                </div>
+                <div class="paragraph">
+                    <span class="three-row-text">{{ option.title }}</span>
+                </div>
             </div>
         </div>
     </div>

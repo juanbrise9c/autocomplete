@@ -48,14 +48,10 @@
             padding: 8px;
             width: 100%;
             border-radius: 3px;
-
-            span {
-                font-weight: bold;
-            }
         } 
 
         .custom-row:hover {
-            background-color: rgb(201, 201, 201);
+            background-color: #9fc1f5;
         }
     }
 
@@ -69,4 +65,12 @@
     .input-container {
         width: 40vh;
     }
+}
+
+.three-row-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
 }
