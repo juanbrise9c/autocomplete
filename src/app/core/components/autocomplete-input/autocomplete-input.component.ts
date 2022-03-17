@@ -22,6 +22,7 @@ export class AutocompleteInputComponent implements OnInit, AfterViewInit {
   public configObject: any = {};
   public options: any = [];
   public loading: boolean = false;
+  public hidden: boolean = false;
 
   constructor(
     private _apiService: ApiService
@@ -31,19 +32,29 @@ export class AutocompleteInputComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.setListener();
+    this.setListeners();
   }
 
-  setListener() {
+  setListeners() {
+    // Run "searchData" when the search bar changes
     fromEvent(this.searchInput?.nativeElement, 'keyup')
       .pipe(
         debounceTime(500),
         map((event: any) => event.target.value)
       )
       .subscribe(value => this.searchData(value));
+
+    // Hide or show the autocomplete
+    fromEvent(this.searchInput?.nativeElement, 'blur')
+      .subscribe(value => this.hidden = !this.hidden);
+
+    fromEvent(this.searchInput?.nativeElement, 'focus')
+      .subscribe(value => { 
+        if (this.options.length) this.hidden = !this.hidden 
+      });
   }
 
-  async searchData(searchValue: string) {
+  searchData(searchValue: string) {
     this.loading = true;
     this._apiService.getData(this.configObject.model, searchValue)
       .then((data: any) => {
