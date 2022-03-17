@@ -12,6 +12,7 @@ export class AutocompleteInputComponent implements OnInit {
   @ViewChild('searchInput', { static: true }) searchInput: ElementRef | undefined;
 
   public options: any = [];
+  public loading: boolean = false;
 
   constructor(
     private _apiService: ApiService
@@ -31,12 +32,15 @@ export class AutocompleteInputComponent implements OnInit {
   }
 
   async searchData(searchValue: string) {
+    this.loading = true;
     this._apiService.getData('issues', searchValue)
       .then((data: any) => {
         this.options = data?.items || [];
+        this.loading = false;
       })
       .catch((e) => {
         console.error(e)
+        this.loading = false;
       });
   }
 }
